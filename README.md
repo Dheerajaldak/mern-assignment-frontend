@@ -78,10 +78,33 @@ If you do not immediately notice any issues, try adding a way to
 
 ---
 
-## Submission
-- Fork this repository and share the link on email.
+## My Approach & Implementation Details
+
+### Identified Issues & Fixes
+1. **Redundant Redux State**: The `activeCount` was being manually managed in the Redux state, creating a risk of it falling out of sync with the actual list of subscriptions.
+   - *Fix*: Removed `activeCount` from the slice and implemented it as **Derived State** in the component, ensuring 100% accuracy.
+2. **API Interaction & Robustness**: The initial implementation did not handle async loading states or errors effectively.
+   - *Fix*: Leveraged **Redux Toolkit's `createAsyncThunk`** to handle the full lifecycle of API requests (pending, fulfilled, rejected).
+3. **TypeScript Implementation**: The Redux `extraReducers` were missing explicit types for the `builder` parameter, and several components used `any`, undermining type safety.
+   - *Fix*: Added `ActionReducerMapBuilder` types and defined strict interfaces for `Subscription` and `SubscriptionsState`.
+4. **Subscription Management Controls**:
+   - *Fix*: Added UI controls to **Add Subscription** and **Cancel the Latest** subscription.
+   - *Fix (Bonus)*: Per the "Important Note" in the assignment, I enhanced the `PATCH` route (in the mock API) and the frontend to allow **canceling a specific subscription** directly from the list.
+5. **Environment Configuration**: Fixed the port conflict where both frontend and backend defaulted to 3000.
+   - *Fix*: Configured the frontend to work harmoniously with the backend on port 3001.
+
+### Design Decisions
+- **Micro-Animations & UI**: Added subtle hover states and clear status indicators (Active/Cancelled) to improve the user experience.
+- **Clean Architecture**: Simplified the component logic by moving API interactions into Redux thunks, keeping the UI components focused on rendering.
+
+### Future Improvements (Given More Time)
+- **Optimistic Updates**: Implementing optimistic UI updates would make the interface feel even faster by updating the list before the API response.
+- **Persistent Storage**: Migrating the in-memory server state to a real database like MongoDB.
+- **Global Error Handling**: Adding a Toast notification system for better user feedback on API failures.
 
 ---
 
-## Optional
-If you had more time, briefly mention what you would improve next and why.
+## Submission Documentation
+- **Author**: Neown Applicant
+- **Date**: Feb 2026
+- **Status**: Completed and Verified

@@ -20,8 +20,16 @@ export async function POST() {
   return NextResponse.json(newSub);
 }
 
-export async function PATCH() {
-  const active = subscriptions.find((s) => s.status === 'active');
+export async function PATCH(request: Request) {
+  const body = await request.json().catch(() => ({}));
+  const id = body.id;
+
+  let active;
+  if (id) {
+    active = subscriptions.find((s) => s.id === id && s.status === 'active');
+  } else {
+    active = subscriptions.find((s) => s.status === 'active');
+  }
 
   if (active) {
     active.status = 'cancelled';
